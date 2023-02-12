@@ -7,7 +7,7 @@ from rest_framework.response import Response
 
 # local apps
 from saleorder.models import SaleOrder
-from picking.models import Picking, StatusPicking
+from picking.models import Picking, Status
 from picking.api.serializers import PickingSerializer
 
 class PickingViewSet(viewsets.ModelViewSet):
@@ -17,14 +17,16 @@ class PickingViewSet(viewsets.ModelViewSet):
 
     def list(self, request, *args, **kwargs):
         saleorder = kwargs.get('saleorder')
+        print(saleorder)
         try:
             saleorder = SaleOrder.objects.get(no_sale_order=saleorder)
         except:
             saleorder = None
 
+        self.queryset = self.queryset.filter(sale_order=saleorder)
+        print(self.queryset)
         if saleorder is not None:
             try:
-                self.queryset = self.queryset.filter(sale_order=saleorder)
                 print(self.queryset)
             except:
                 return Response(status=status.HTTP_404_NOT_FOUND)
@@ -41,7 +43,7 @@ class PickingViewSet(viewsets.ModelViewSet):
 
         # Establece un valor por defecto para el campo "status"
         if 'status' not in request.data:
-            request.data['status'] = StatusPicking.objects.filter(name='PP')
+            request.data['status'] = Status.objects.filter(name='PP')
 
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)

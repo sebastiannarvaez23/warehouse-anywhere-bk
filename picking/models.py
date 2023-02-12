@@ -4,7 +4,7 @@ from saleorder.models import SaleOrder
 from django.utils.timezone import now
 
 # Create your models here.
-class StatusPicking(models.Model):
+class Status(models.Model):
     id = models.AutoField(primary_key=True, verbose_name="Id")
     name = models.CharField(max_length=25, verbose_name="Nombre")
     description = models.CharField(max_length=255, verbose_name="Descripción")
@@ -20,9 +20,8 @@ class StatusPicking(models.Model):
 class Picking(models.Model):
     id = models.AutoField(primary_key=True, verbose_name="Id")
     last_modification = models.DateTimeField(verbose_name="Última modificación", default=now)
-    status = models.ForeignKey(StatusPicking, on_delete=models.DO_NOTHING, verbose_name="Estado", null=True, blank=True)
-    responsible = models.CharField(max_length=255, verbose_name="Responsable")
-    #responsible = models.ForeignKey(User, on_delete=models.DO_NOTHING, verbose_name="Responsable")
+    status = models.ForeignKey(Status, on_delete=models.DO_NOTHING, verbose_name="Estado", null=True, blank=True)
+    responsible = models.ForeignKey(User, on_delete=models.DO_NOTHING, verbose_name="Responsable")
     sale_order = models.ForeignKey(SaleOrder, on_delete=models.DO_NOTHING, verbose_name="Orden de venta")
 
     class Meta:
@@ -31,6 +30,4 @@ class Picking(models.Model):
         ordering = ['-id']
 
     def __str__(self):
-        return str(self.id) + " " + self.responsible
-
-
+        return str(self.id) + " " + self.responsible.first_name
