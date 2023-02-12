@@ -7,7 +7,7 @@ from rest_framework.response import Response
 
 # local apps
 from saleorder.models import SaleOrder
-from picking.models import Picking
+from picking.models import Picking, StatusPicking
 from picking.api.serializers import PickingSerializer
 
 class PickingViewSet(viewsets.ModelViewSet):
@@ -34,4 +34,15 @@ class PickingViewSet(viewsets.ModelViewSet):
 
         return super().list(request, *args, **kwargs)
 
+    
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
 
+        # Establece un valor por defecto para el campo "status"
+        if 'status' not in request.data:
+            request.data['status'] = StatusPicking.objects.filter(name='PP')
+
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)

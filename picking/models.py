@@ -20,7 +20,7 @@ class StatusPicking(models.Model):
 class Picking(models.Model):
     id = models.AutoField(primary_key=True, verbose_name="Id")
     last_modification = models.DateTimeField(verbose_name="Última modificación", default=now)
-    status = models.ForeignKey(StatusPicking, on_delete=models.DO_NOTHING, verbose_name="Estado")
+    status = models.ForeignKey(StatusPicking, on_delete=models.DO_NOTHING, verbose_name="Estado", null=True, blank=True)
     responsible = models.CharField(max_length=255, verbose_name="Responsable")
     #responsible = models.ForeignKey(User, on_delete=models.DO_NOTHING, verbose_name="Responsable")
     sale_order = models.ForeignKey(SaleOrder, on_delete=models.DO_NOTHING, verbose_name="Orden de venta")
