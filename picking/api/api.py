@@ -1,5 +1,8 @@
+import time
+
 # Django
 from django.core.exceptions import PermissionDenied
+from django.contrib.auth.models import User
 
 # restframework
 from rest_framework import viewsets, status
@@ -17,16 +20,16 @@ class PickingViewSet(viewsets.ModelViewSet):
 
     def list(self, request, *args, **kwargs):
         saleorder = kwargs.get('saleorder')
-        print(saleorder)
+
         try:
             saleorder = SaleOrder.objects.get(no_sale_order=saleorder)
         except:
             saleorder = None
 
-        self.queryset = self.queryset.filter(sale_order=saleorder)
-        print(self.queryset)
         if saleorder is not None:
             try:
+                self.queryset = self.queryset.filter(sale_order=saleorder)
+                
                 print(self.queryset)
             except:
                 return Response(status=status.HTTP_404_NOT_FOUND)
@@ -40,11 +43,18 @@ class PickingViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
+        
+        responsible = User.objects.get(id=request.data['responsible'])
+        status_picking = Status.objects.get(name='PP')
+        sale_order = SaleOrder.objects.get(no_sale_order=request.data['sale_order'])
 
-        # Establece un valor por defecto para el campo "status"
-        if 'status' not in request.data:
-            request.data['status'] = Status.objects.filter(name='PP')
+        # Creamos un nuevo objeto Picking
+        picking = Picking.objects.create(
+            last_modification=request.data['last_modification'],
+            status=status_picking,
+            responsible=responsible,
+            sale_order=sale_order
+        )
 
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        serializer = self.get_serializer(instance=picking)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
