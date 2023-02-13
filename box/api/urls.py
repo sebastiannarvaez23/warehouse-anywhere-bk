@@ -11,7 +11,7 @@ router = routers.DefaultRouter()
 router.register(r'', DimensionViewSet)
 
 urlpatterns = [
-    path('<str:picking>/', BoxViewSet.as_view({'get':'list'})),
+    path('box/<str:picking>/', BoxViewSet.as_view({'get':'list'})),
     path('dimension/', include(router.urls)),
     path('', BoxViewSet.as_view({'post':'create'})),
     path('<int:pk>', BoxViewSet.as_view({'patch': 'partial_update'})),

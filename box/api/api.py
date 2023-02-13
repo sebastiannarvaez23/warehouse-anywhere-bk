@@ -1,5 +1,6 @@
 # Django
 from django.core.exceptions import PermissionDenied
+from django.contrib.auth.models import User
 
 # restframework
 from rest_framework import viewsets, status
@@ -18,7 +19,7 @@ class BoxViewSet(viewsets.ModelViewSet):
 
     def list(self, request, *args, **kwargs):
         picking = kwargs.get('picking')
-        picking = Picking.objects.filter(id=picking)
+        picking = Picking.objects.get(id=picking)
 
         if picking is not None:
             try:
@@ -28,6 +29,25 @@ class BoxViewSet(viewsets.ModelViewSet):
         if not picking:
             raise PermissionDenied('A picking parameter is required.')
         return super().list(request, *args, **kwargs)
+    
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        responsible = User.objects.get(id=request.data['responsible'])
+        dimension = Dimension.objects.get(id=request.data['dimension'])
+        picking = Picking.objects.get(id=request.data['picking'])
+
+        box = Box.objects.create(
+            gross_weight = 0,
+            responsible = responsible,
+            dimension = dimension,
+            picking = picking
+        )
+
+        serializer = self.get_serializer(instance=box)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
 
 class DimensionViewSet(viewsets.ModelViewSet):
     """Box view set."""

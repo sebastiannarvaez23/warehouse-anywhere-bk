@@ -2,7 +2,7 @@ from rest_framework import serializers
 from picking.models import Picking
 
 class PickingSerializer(serializers.ModelSerializer):
-    last_modification = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
+    last_modification = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", required=False)
     status = serializers.CharField(source='status.name', required=False)
     responsible = serializers.CharField(required=False)
     

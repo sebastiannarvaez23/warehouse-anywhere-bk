@@ -47,10 +47,8 @@ class PickingViewSet(viewsets.ModelViewSet):
         responsible = User.objects.get(id=request.data['responsible'])
         status_picking = Status.objects.get(name='PP')
         sale_order = SaleOrder.objects.get(no_sale_order=request.data['sale_order'])
-
         # Creamos un nuevo objeto Picking
         picking = Picking.objects.create(
-            last_modification=request.data['last_modification'],
             status=status_picking,
             responsible=responsible,
             sale_order=sale_order
