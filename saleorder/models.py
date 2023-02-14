@@ -11,8 +11,6 @@ class Collection(models.Model):
         verbose_name_plural = "Colecciones"
         ordering = ['-id']
 
-
-
 class PayTerm(models.Model):
     id = models.AutoField(primary_key=True, verbose_name="Id")
     name = models.CharField(max_length=255, verbose_name="Nombre")
@@ -21,7 +19,6 @@ class PayTerm(models.Model):
         verbose_name = "Termino de pago"
         verbose_name_plural = "Terminos de pago"
         ordering = ['-id']
-
 
 class SaleOrder(models.Model):
     id = models.AutoField(primary_key=True, verbose_name="Id")
