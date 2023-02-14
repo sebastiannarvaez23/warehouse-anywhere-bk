@@ -1,8 +1,5 @@
 #Django
-from django.urls import path, include
-
-# DRF
-from rest_framework import routers
+from django.urls import path
 
 # LocalApps
 from saleorder.api.api import SaleOrderViewSet
