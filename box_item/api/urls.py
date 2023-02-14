@@ -1,8 +1,8 @@
 from django.urls import path
-from box.api.api import BoxViewSet
+from box_item.api.api import BoxItemViewSet
 
 urlpatterns = [
-    path('<str:box>/', BoxViewSet.as_view({'get':'list'})),
-    path('', BoxViewSet.as_view({'post':'create'})),
-    #path('<int:pk>', BoxViewSet.as_view({'get': 'retrieve', 'put': 'update', 'patch': 'partial_update', 'delete': 'destroy'})),
+    path('<str:box>/', BoxItemViewSet.as_view({'get':'list'})),
+    path('', BoxItemViewSet.as_view({'post':'create'})),
+    #path('<int:pk>', BoxItemViewSet.as_view({'get': 'retrieve', 'put': 'update', 'patch': 'partial_update', 'delete': 'destroy'})),
 ]

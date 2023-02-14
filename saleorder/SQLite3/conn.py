@@ -4,12 +4,20 @@ from .queries import (
     query_get_picking_quantity_by_customer, 
     query_get_request_quantity_by_customer
 )
-import sqlite3
+from wms_picking.settings.local import DATABASES
+
+import psycopg2
 
 class ConnSQLite3:
     def __init__(self):
         try:
-            self.connection = sqlite3.connect("db.sqlite3")
+            self.connection = psycopg2.connect(
+                user=DATABASES['default']['USER'],
+                password=DATABASES['default']['PASSWORD'],
+                host=DATABASES['default']['HOST'],
+                port=DATABASES['default']['PORT'],
+                database=DATABASES['default']['NAME']
+            )
             self.cursor = self.connection.cursor()
             print("successful connection!")
         except Exception as e:
