@@ -1,4 +1,5 @@
 def query_get_picking_quantity_by_customer(name_customer):
+    """Suma todas las referencias que tengo despachadas de un cliente"""
     sql = f"""
         SELECT 
             SUM(T3.quantity)
@@ -13,6 +14,7 @@ def query_get_picking_quantity_by_customer(name_customer):
     return sql
 
 def query_get_request_quantity_by_customer(name_customer):
+    """Suma todas las referencias que tengo solicitadas por un cliente"""
     sql = f"""
         SELECT 
             SUM(T1.quantity)
@@ -25,6 +27,7 @@ def query_get_request_quantity_by_customer(name_customer):
     return sql
 
 def query_get_picking_quantity_by_saleorder(sale_order):
+    """Suma todas las referencias que tengo despachadas de una orden de venta"""
     sql = f"""
         SELECT 
             SUM(T3.quantity)
@@ -39,6 +42,7 @@ def query_get_picking_quantity_by_saleorder(sale_order):
     return sql
 
 def query_get_request_quantity_by_saleorder(sale_order):
+    """Suma todas las referencias que tengo solicitadas de una orden de venta"""
     sql = f"""
         SELECT 
             SUM(T1.quantity)

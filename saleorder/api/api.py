@@ -8,7 +8,7 @@ from rest_framework.response import Response
 # local apps
 from saleorder.models import SaleOrder
 from saleorder.api.serializers import SaleOrderSerializer
-from saleorder.SQLite3.conn import ConnSQLite3 as ConnDB
+from saleorder.postgresql.conn import ConnSQLite3 as ConnDB
 
 class SaleOrderViewSet(viewsets.ModelViewSet):
     """View Set class SaleOrderAPIView"""
