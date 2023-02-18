@@ -4,16 +4,16 @@ from box_item.models import BoxItem
 
 class BoxItemSerializer(ModelSerializer):
     reference = serializers.CharField(source='reference.item_code')
-    modelsize = serializers.CharField(source='reference.model_size')
-    color = serializers.CharField(source='reference.color')
+    modelsize = serializers.CharField(source='reference.model_size', read_only=True)
+    color = serializers.CharField(source='reference.color', read_only=True)
     
     class Meta:
         model = BoxItem
-        fields = [
+        fields = (
             'id',
             'reference',
             'quantity',
             'box',
             'modelsize',
             'color',
-        ]
+        )

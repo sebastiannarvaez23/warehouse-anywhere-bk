@@ -11,7 +11,7 @@ from picking.models import Picking
 from box.models import Box, Dimension
 from box.api.serializers import BoxSerializer, DimensionSerializer
 
-
+import time
 class BoxViewSet(viewsets.ModelViewSet):
     """Box view set."""
     queryset = Box.objects.all()
@@ -48,6 +48,23 @@ class BoxViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(instance=box)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
+    def partial_update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+
+        responsible = User.objects.get(id=request.data['responsible'])
+        dimension = Dimension.objects.get(id=request.data['dimension'])
+        picking = Picking.objects.get(id=request.data['picking'])
+        gross_weight = request.data['gross_weight']
+
+        instance.gross_weight = gross_weight
+        instance.responsible = responsible
+        instance.dimension = dimension
+        instance.picking = picking
+        instance.save()
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 class DimensionViewSet(viewsets.ModelViewSet):
     """Box view set."""

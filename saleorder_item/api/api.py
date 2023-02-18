@@ -18,11 +18,10 @@ class SaleOrderItemViewSet(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         saleorder = kwargs.get('nosaleorder')
         saleorder = SaleOrder.objects.get(no_sale_order=saleorder)
-        self.queryset = self.queryset.filter(sale_order=saleorder)
 
         if saleorder is not None:
             try:
-                print("hollaa")
+                self.queryset = self.queryset.filter(sale_order=saleorder)
             except:
                 return Response(status=status.HTTP_404_NOT_FOUND)
 

@@ -1,7 +1,18 @@
 from rest_framework.serializers import ModelSerializer
+from rest_framework import serializers
 from picking.models import Picking
 
-class PickingSerializer(ModelSerializer):
+class ReferenceSerializer(ModelSerializer):
+    reference = serializers.CharField(required=False)
+    modelsize = serializers.CharField(required=False)
+    color = serializers.CharField(required=False)
+    
     class Meta:
         model = Picking
-        fields = '__all__'
+        fields = (
+            'id',
+            'item_code',
+            'name',
+            'model_size',
+            'color',
+        )

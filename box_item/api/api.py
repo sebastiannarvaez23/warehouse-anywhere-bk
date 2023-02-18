@@ -6,6 +6,7 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 
 # local apps
+from reference.models import Reference
 from box.models import Box
 from box_item.models import BoxItem
 from box_item.api.serializers import BoxItemSerializer
@@ -30,3 +31,19 @@ class BoxItemViewSet(viewsets.ModelViewSet):
             if not box:
                 raise PermissionDenied('A box parameter is required.')
         return super().list(request, *args, **kwargs)
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        
+        reference = Reference.objects.get(item_code=request.data['reference'])
+        box = Box.objects.get(id=request.data['box'])
+
+        boxitem = BoxItem.objects.create(
+            quantity = request.data['quantity'],
+            reference = reference,
+            box = box
+        )
+
+        serializer = self.get_serializer(instance=boxitem)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)

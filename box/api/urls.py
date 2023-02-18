@@ -13,7 +13,7 @@ router.register(r'', DimensionViewSet)
 urlpatterns = [
     path('box/<str:picking>/', BoxViewSet.as_view({'get':'list'})),
     path('dimension/', include(router.urls)),
-    path('', BoxViewSet.as_view({'post':'create'})),
-    path('<int:pk>', BoxViewSet.as_view({'patch': 'partial_update'})),
+    path('box/', BoxViewSet.as_view({'post':'create'})),
+    path('box/<int:pk>', BoxViewSet.as_view({'patch': 'partial_update'})),
     #path('<int:pk>', BoxViewSet.as_view({'get': 'retrieve', 'put': 'update', 'patch': 'partial_update', 'delete': 'destroy'})),
 ]

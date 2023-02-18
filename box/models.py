@@ -1,5 +1,6 @@
 # Django
 from django.db import models
+from django.contrib.auth.models import User
 from django.utils.timezone import now
 
 # Local apps
@@ -23,7 +24,7 @@ class Box(models.Model):
     id = models.AutoField(primary_key=True, verbose_name="Id")
     last_modification = models.DateTimeField(verbose_name="Última modificación", default=now)
     gross_weight = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Peso Bruto")
-    responsible = models.CharField(max_length=255, verbose_name="Responsable")
+    responsible = models.ForeignKey(User, on_delete=models.DO_NOTHING, verbose_name="Responsable")
     dimension = models.ForeignKey(Dimension, on_delete=models.DO_NOTHING, verbose_name="Dimensión")
     picking = models.ForeignKey(Picking, on_delete=models.DO_NOTHING, verbose_name="Despacho")
 
