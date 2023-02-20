@@ -2,7 +2,11 @@ def query_get_picking_quantity_by_customer(name_customer):
     """Suma todas las referencias que tengo despachadas de un cliente"""
     sql = f"""
         SELECT 
-            SUM(T3.quantity)
+            CASE 
+				WHEN SUM(T3.quantity) is null 
+				THEN 0
+				ELSE SUM(T3.quantity)
+			END
         FROM
             saleorder_saleorder T0
             INNER JOIN picking_picking T1 ON T0.id = T1.sale_order_id
@@ -16,8 +20,12 @@ def query_get_picking_quantity_by_customer(name_customer):
 def query_get_request_quantity_by_customer(name_customer):
     """Suma todas las referencias que tengo solicitadas por un cliente"""
     sql = f"""
-        SELECT 
-            SUM(T1.quantity)
+        SELECT
+            CASE 
+				WHEN SUM(T1.quantity) is null 
+				THEN 0
+				ELSE SUM(T1.quantity)
+			END
         FROM
             saleorder_saleorder T0
             INNER JOIN saleorder_item_saleorderitem T1 ON T0.id = T1.sale_order_id
@@ -29,8 +37,12 @@ def query_get_request_quantity_by_customer(name_customer):
 def query_get_picking_quantity_by_saleorder(sale_order):
     """Suma todas las referencias que tengo despachadas de una orden de venta"""
     sql = f"""
-        SELECT 
-            SUM(T3.quantity)
+        SELECT
+            CASE 
+				WHEN SUM(T3.quantity) is null 
+				THEN 0
+				ELSE SUM(T3.quantity)
+			END
         FROM
             saleorder_saleorder T0
             INNER JOIN picking_picking T1 ON T0.id = T1.sale_order_id
@@ -44,8 +56,12 @@ def query_get_picking_quantity_by_saleorder(sale_order):
 def query_get_request_quantity_by_saleorder(sale_order):
     """Suma todas las referencias que tengo solicitadas de una orden de venta"""
     sql = f"""
-        SELECT 
-            SUM(T1.quantity)
+        SELECT
+            CASE 
+				WHEN SUM(T1.quantity) is null 
+				THEN 0
+				ELSE SUM(T1.quantity)
+			END
         FROM
             saleorder_saleorder T0
             INNER JOIN saleorder_item_saleorderitem T1 ON T0.id = T1.sale_order_id
