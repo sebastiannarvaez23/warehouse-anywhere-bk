@@ -9,9 +9,12 @@ from picking.models import Picking
 # Create your models here.
 class Dimension(models.Model):
     id = models.AutoField(primary_key=True, verbose_name="Id")
-    name = models.CharField(max_length=255, verbose_name="Nombre")
-    dimension = models.CharField(max_length=255, verbose_name="Dimension")
-
+    name = models.CharField(max_length=255, unique=True, verbose_name="Nombre")
+    dimension_height = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Dimension height ")
+    dimension_width = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Dimension width ")
+    dimension_length = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Dimension length")
+    weight = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Peso Bruto")
+    
     class Meta:
         verbose_name = "Dimension"
         verbose_name_plural = "Dimensiones"
