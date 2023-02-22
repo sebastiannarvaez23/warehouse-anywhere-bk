@@ -14,6 +14,7 @@ class Dimension(models.Model):
     dimension_width = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Dimension width ")
     dimension_length = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Dimension length")
     weight = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Peso Bruto")
+    is_delete = models.BooleanField(default=False, verbose_name="Eliminado")
     
     class Meta:
         verbose_name = "Dimension"

@@ -11,7 +11,6 @@ from picking.models import Picking
 from box.models import Box, Dimension
 from box.api.serializers import BoxSerializer, DimensionSerializer
 
-import time
 class BoxViewSet(viewsets.ModelViewSet):
     """Box view set."""
     queryset = Box.objects.all()
@@ -70,3 +69,18 @@ class DimensionViewSet(viewsets.ModelViewSet):
     """Box view set."""
     queryset = Dimension.objects.all()
     serializer_class = DimensionSerializer
+
+    def list(self, request, *args, **kwargs):
+        try:
+            self.queryset = self.queryset.filter(is_delete=False)
+        except:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        return super().list(request, *args, **kwargs)
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        instance.is_delete = True
+        instance.save()
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)
