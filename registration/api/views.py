@@ -18,7 +18,7 @@ class UserLoginAPIView(APIView):
         serializer.is_valid(raise_exception=True)
         user, token = serializer.save()
         data = {
-            'user': 'manager',
+            'user': user.username,
             'access_token': token
         }
         return Response(data, status=status.HTTP_201_CREATED)

@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 # restframework
 from rest_framework import viewsets, status
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 
 # local apps
 from saleorder.models import SaleOrder
@@ -17,6 +18,7 @@ class PickingViewSet(viewsets.ModelViewSet):
     """Picking view set."""
     queryset = Picking.objects.all()
     serializer_class = PickingSerializer
+    permission_classes = (IsAuthenticated,)
 
     def list(self, request, *args, **kwargs):
         saleorder = kwargs.get('saleorder')

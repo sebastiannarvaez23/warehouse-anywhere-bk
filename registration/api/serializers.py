@@ -1,3 +1,6 @@
+import jwt
+from wms_picking.settings import local as settings
+
 """Users Serializers."""
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
@@ -72,3 +75,31 @@ class UserLoginSerializer(serializers.Serializer):
         """Generate or retrive new token."""
         token, created = Token.objects.get_or_create(user=self.context['user'])
         return self.context['user'], token.key
+
+
+class AccountVerificationSerializer(serializers.Serializer):
+    """Account verification serializer."""
+
+    token = serializers.CharField()
+
+    def validate_token(self, data):
+        """Verify token is valid."""
+
+        try:
+            payload = jwt.decode(data, settings.SECRET_KEY, algorithms=['HS256'])
+        except jwt.ExpiredSignatureError:
+            raise serializers.ValidationError('Verification link has expired.')
+        except jwt.PyJWTError:
+            raise serializers.ValidationError('Invalid Token')
+        
+        if payload['type'] != 'email_confirmation':
+            raise serializers.ValidationError('Invalid token')
+        self.context['payload'] = payload
+        return data
+    
+    def save(self):
+        """Update user's verified status."""
+        payload = self.context['payload']
+        user = User.objects.get(username=payload['user'])
+        user.is_verified = True
+        user.save()
