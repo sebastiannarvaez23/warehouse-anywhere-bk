@@ -20,6 +20,19 @@ DEBUG = env.bool('DEBUG', default=False)
 
 ALLOWED_HOSTS = []
 
+# CORS HTTPONLY
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:3000',
+)
+CORS_ORIGIN_REGEX_WHITELIST = [
+    r'localhost:3000',
+]
+CORS_EXPOSE_HEADERS = ['Content-Type', 'Authorization']
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = None
+SESSION_COOKIE_SECURE = False
 
 # Application definition
 

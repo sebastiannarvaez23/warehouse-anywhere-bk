@@ -19,7 +19,7 @@ class ConnSQLite3:
                 database=DATABASES['default']['NAME']
             )
             self.cursor = self.connection.cursor()
-            print("successful connection!")
+            #print("successful connection!")
         except Exception as e:
             print(e)
         
@@ -34,8 +34,8 @@ class ConnSQLite3:
             picking_quantity = {
                 'quantity': data[0]
             }
-            print("Consulta realizada con exito!")
-            print(f"Resultado: {picking_quantity}\n")
+            #print("Consulta realizada con exito!")
+            #print(f"Resultado: {picking_quantity}\n")
             self.close()
             return picking_quantity
         except Exception as e:
@@ -53,8 +53,8 @@ class ConnSQLite3:
             request_quantity = {
                 'quantity': data[0]
             }
-            print("Consulta realizada con exito!")
-            print(f"Resultado: {request_quantity}\n")
+            #print("Consulta realizada con exito!")
+            #print(f"Resultado: {request_quantity}\n")
             self.close()
             return request_quantity
         except Exception as e:
@@ -72,8 +72,8 @@ class ConnSQLite3:
             picking_quantity = {
                 'quantity': data[0]
             }
-            print("Consulta realizada con exito!")
-            print(f"Resultado: {picking_quantity}\n")
+            #print("Consulta realizada con exito!")
+            #print(f"Resultado: {picking_quantity}\n")
             self.close()
             return picking_quantity
         except Exception as e:
@@ -91,8 +91,8 @@ class ConnSQLite3:
             request_quantity = {
                 'quantity': data[0]
             }
-            print("Consulta realizada con exito!")
-            print(f"Resultado: {request_quantity}\n")
+            #print("Consulta realizada con exito!")
+            #print(f"Resultado: {request_quantity}\n")
             self.close()
             return request_quantity
         except Exception as e:

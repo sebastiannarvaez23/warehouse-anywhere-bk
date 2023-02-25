@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 # restframework
 from rest_framework import viewsets, status
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 
 # local apps
 from picking.models import Picking
@@ -15,6 +16,7 @@ class BoxViewSet(viewsets.ModelViewSet):
     """Box view set."""
     queryset = Box.objects.all()
     serializer_class = BoxSerializer
+    permission_classes = (IsAuthenticated,)
 
     def list(self, request, *args, **kwargs):
         picking = kwargs.get('picking')
@@ -69,6 +71,7 @@ class DimensionViewSet(viewsets.ModelViewSet):
     """Box view set."""
     queryset = Dimension.objects.all()
     serializer_class = DimensionSerializer
+    permission_classes = (IsAuthenticated,)
 
     def list(self, request, *args, **kwargs):
         try:
