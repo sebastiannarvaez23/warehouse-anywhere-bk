@@ -19,7 +19,10 @@ class UserLoginAPIView(APIView):
         user, token = serializer.save()
         data = {
             'status': 200,
-            'user': user.username,
+            'user': {
+                'id': user.id,
+                'username': user.username
+            },
             'access_token': token
         }
         response = Response(data, status=status.HTTP_201_CREATED)
