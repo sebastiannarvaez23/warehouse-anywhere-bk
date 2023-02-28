@@ -64,6 +64,19 @@ THIRD_APPS = [
 
 INSTALLED_APPS = BASE_APPS + LOCAL_APPS + THIRD_APPS
 
+# SSL / TLS
+SECURE_SSL_REDIRECT = False
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+if DEBUG:
+    INSTALLED_APPS += ['sslserver']
+    # Puedes configurar el puerto y las rutas que desees.
+    # En este ejemplo, se ejecuta en el puerto 8000 con SSL/TLS activado.
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    SSLCERTIFICATE = '/path/to/cert.pem'
+    SSLKEY = '/path/to/key.pem'
+    # Opcionalmente, puedes agregar SSL_VERSION para especificar la versión de SSL/TLS que deseas utilizar.
+
+# DRF
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES':(
         'rest_framework.renderers.JSONRenderer',
@@ -88,7 +101,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
 ]
 
-ROOT_URLCONF = 'wms_picking.urls'
+ROOT_URLCONF = 'wmsbk.urls'
 
 TEMPLATES = [
     {
@@ -106,7 +119,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'wms_picking.wsgi.application'
+WSGI_APPLICATION = 'wmsbk.wsgi.application'
 
 
 # Password validation

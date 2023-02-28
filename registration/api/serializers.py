@@ -1,5 +1,5 @@
 import jwt
-from wms_picking.settings import local as settings
+from wmsbk.settings import local as settings
 
 """Users Serializers."""
 from rest_framework import serializers

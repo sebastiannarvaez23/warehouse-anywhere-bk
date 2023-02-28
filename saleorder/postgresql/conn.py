@@ -4,7 +4,7 @@ from .queries import (
     query_get_picking_quantity_by_customer, 
     query_get_request_quantity_by_customer
 )
-from wms_picking.settings.local import DATABASES
+from wmsbk.settings.local import DATABASES
 
 import psycopg2
 
