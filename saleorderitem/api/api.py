@@ -7,8 +7,8 @@ from rest_framework.response import Response
 
 # local apps
 from saleorder.models import SaleOrder
-from saleorder_item.models import SaleOrderItem
-from saleorder_item.api.serializers import SaleOrderItemSerializer
+from saleorderitem.models import SaleOrderItem
+from saleorderitem.api.serializers import SaleOrderItemSerializer
 
 class SaleOrderItemViewSet(viewsets.ModelViewSet):
     """View Set class SaleOrderAPIView"""

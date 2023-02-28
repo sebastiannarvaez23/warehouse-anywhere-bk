@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer
 from rest_framework import serializers
-from box_item.models import BoxItem
+from boxitem.models import BoxItem
 
 class BoxItemSerializer(ModelSerializer):
     reference = serializers.CharField(source='reference.item_code')

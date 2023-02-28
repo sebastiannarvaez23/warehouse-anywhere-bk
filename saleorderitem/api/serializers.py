@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer
 from rest_framework import serializers
-from saleorder_item.models import SaleOrderItem
+from saleorderitem.models import SaleOrderItem
 
 class SaleOrderItemSerializer(ModelSerializer):
     reference = serializers.CharField(source='reference.item_code')

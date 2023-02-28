@@ -8,8 +8,8 @@ from rest_framework.response import Response
 # local apps
 from reference.models import Reference
 from box.models import Box
-from box_item.models import BoxItem
-from box_item.api.serializers import BoxItemSerializer
+from boxitem.models import BoxItem
+from boxitem.api.serializers import BoxItemSerializer
 
 import time
 

@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class SaleorderItemConfig(AppConfig):
+class BoxitemConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'saleorder_item'
+    name = 'boxitem'

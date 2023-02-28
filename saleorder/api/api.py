@@ -21,17 +21,15 @@ class SaleOrderViewSet(viewsets.ModelViewSet):
         if saleorder is not None:
             try:
                 self.queryset = self.queryset.filter(no_sale_order=saleorder)
+                response = super().list(request, *args, **kwargs)
+                response.data = response.data[0]
             except:
                 return Response(status=status.HTTP_404_NOT_FOUND)
 
         if not saleorder:
             raise PermissionDenied('A nosaleorder parameter is required.')
 
-        response = super().list(request, *args, **kwargs)
-        response.data = response.data[0]
-
         return response
-
 
     def list_info_indicator(self, request, *args, **kwargs):
 
