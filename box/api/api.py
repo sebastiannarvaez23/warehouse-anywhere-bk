@@ -1,6 +1,6 @@
 # Django
 from django.core.exceptions import PermissionDenied
-from django.contrib.auth.models import User
+from registration.models import User  
 
 # restframework
 from rest_framework import viewsets, status

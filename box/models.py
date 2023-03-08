@@ -1,6 +1,6 @@
 # Django
 from django.db import models
-from django.contrib.auth.models import User
+from registration.models import User  
 from django.utils import timezone
 
 # Local apps

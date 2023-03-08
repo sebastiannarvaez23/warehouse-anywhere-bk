@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from registration.models import User  
 from saleorder.models import SaleOrder
 from django.utils.timezone import now
 

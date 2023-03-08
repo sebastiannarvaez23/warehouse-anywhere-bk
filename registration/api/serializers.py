@@ -6,7 +6,7 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth import authenticate, password_validation
 from rest_framework.authtoken.models import Token
-from django.contrib.auth. models import User
+from registration.models import User  
 from django.core.validators import RegexValidator
 
 class UserModelSerializer(serializers.ModelSerializer):
