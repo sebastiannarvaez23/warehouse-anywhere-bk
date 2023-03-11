@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
-
+from company.models import Company
 # Create your models here.
 
 class UserManager(BaseUserManager):
@@ -43,6 +43,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     picture = models.ImageField(upload_to='perfil/', max_length=200, blank=True, null=True, verbose_name="Foto de perfil")
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+    company = models.ForeignKey(Company, on_delete=models.DO_NOTHING)
     objects = UserManager()
 
     USERNAME_FIELD = 'username'

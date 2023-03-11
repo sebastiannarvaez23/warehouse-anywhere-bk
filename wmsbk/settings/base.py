@@ -46,6 +46,7 @@ BASE_APPS = [
 ]
 
 LOCAL_APPS = [
+    'company',
     'registration',
     'box.apps.BoxAppConfig',
     'picking.apps.PickingAppConfig',
