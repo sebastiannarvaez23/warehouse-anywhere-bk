@@ -5,7 +5,7 @@ from picking.models import Picking
 class ReferenceSerializer(ModelSerializer):
     reference = serializers.CharField(required=False)
     modelsize = serializers.CharField(required=False)
-    color = serializers.CharField(required=False)
+    color = serializers.PrimaryKeyRelatedField(source='color.name', read_only=True)
     
     class Meta:
         model = Picking

@@ -30,6 +30,9 @@ class Rol(models.Model):
     id = models.AutoField(primary_key=True, verbose_name="id")
     name = models.CharField(max_length=200, verbose_name="Nombre Rol")
 
+    def __str__(self):
+        return self.name
+
 class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=200, unique=True, verbose_name="Nombre de Usuario")
     email = models.EmailField(max_length=254, unique=True, verbose_name="Correo electronico")
