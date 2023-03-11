@@ -12,6 +12,7 @@ class UserManager(BaseUserManager):
             last_name=last_name,
             telephone=telephone,
             rol=Rol.objects.get(id=1),
+            company=Company.objects.get(id=1),
             is_staff=is_staff,
             is_superuser=is_superuser,
             **extra_fields
@@ -38,11 +39,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=254, unique=True, verbose_name="Correo electronico")
     first_name = models.CharField(max_length=100, blank=True, null=True)
     last_name = models.CharField(max_length=100, blank=True, null=True)
-    rol = models.ForeignKey(Rol, on_delete=models.PROTECT, null=True, blank=True, verbose_name="Rol")
     telephone = models.CharField(max_length=100, verbose_name="Telefono")
     picture = models.ImageField(upload_to='perfil/', max_length=200, blank=True, null=True, verbose_name="Foto de perfil")
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+    rol = models.ForeignKey(Rol, on_delete=models.PROTECT, verbose_name="Rol")
     company = models.ForeignKey(Company, on_delete=models.DO_NOTHING)
     objects = UserManager()
 
