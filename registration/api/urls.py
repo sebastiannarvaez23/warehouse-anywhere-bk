@@ -5,6 +5,6 @@ from .api import (
 )
 
 urlpatterns = [
-    path('users/login/', UserLoginAPIView.as_view(), name="login"),
-    path('users/signup/', UserSignUpAPIView.as_view(), name="signup"),
+    path('login/', UserLoginAPIView.as_view(), name="login"),
+    path('signup/', UserSignUpAPIView.as_view(), name="signup"),
 ]

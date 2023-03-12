@@ -29,7 +29,7 @@ class UserLoginAPIView(APIView):
             },
             'access_token': token
         }
-        response = Response(data, status=status.HTTP_201_CREATED)
+        response = Response(data, status=status.HTTP_200_OK)
         response.set_cookie('access_token', token, httponly=True)
         return response
     
