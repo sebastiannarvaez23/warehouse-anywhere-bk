@@ -17,7 +17,6 @@ class SaleOrderViewSet(viewsets.ModelViewSet):
 
     def list(self, request, *args, **kwargs):
         saleorder = kwargs.get('nosaleorder')
-
         if saleorder is not None:
             try:
                 self.queryset = self.queryset.filter(no_sale_order=saleorder)
@@ -25,17 +24,13 @@ class SaleOrderViewSet(viewsets.ModelViewSet):
                 response.data = response.data[0]
             except:
                 return Response(status=status.HTTP_404_NOT_FOUND)
-
         if not saleorder:
             raise PermissionDenied('A nosaleorder parameter is required.')
-
         return response
 
     def list_info_indicator(self, request, *args, **kwargs):
-
         name_customer = kwargs.get('namecustomer')
         no_sale_order = kwargs.get('nosaleorder')
-
         picking_quantity_by_customer = ConnDB().get_picking_quantity_by_customer(name_customer)
         request_quantity_by_customer = ConnDB().get_request_quantity_by_customer(name_customer)
         picking_quantity_by_saleorder = ConnDB().get_picking_quantity_by_saleorder(no_sale_order)
