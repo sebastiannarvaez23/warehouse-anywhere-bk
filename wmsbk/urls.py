@@ -32,11 +32,11 @@ urlpatterns = [
     path('redocs/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     
     path('admin/', admin.site.urls),
-    path('picking/', include('picking.api.urls')),
-    path('box/', include('box.api.urls')),
-    path('boxitem/', include('boxitem.api.urls')),
-    path('saleorder/', include('saleorder.api.urls')),
-    path('saleorderitem/', include('saleorderitem.api.urls')),
+    path('picking/', include('picking.picking.api.urls')),
+    path('box/', include('picking.box.api.urls')),
+    path('boxitem/', include('picking.boxitem.api.urls')),
+    path('saleorder/', include('picking.saleorder.api.urls')),
+    path('saleorderitem/', include('picking.saleorderitem.api.urls')),
     path('registration/', include('registration.api.urls')),
 ]
 

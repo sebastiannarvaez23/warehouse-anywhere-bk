@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer
 from rest_framework import serializers
-from picking.models import Picking
+from picking.picking.models import Picking
 
 class ReferenceSerializer(ModelSerializer):
     reference = serializers.CharField(required=False)

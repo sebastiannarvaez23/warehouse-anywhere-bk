@@ -47,13 +47,13 @@ BASE_APPS = [
 
 LOCAL_APPS = [
     'company',
+    'reference',
     'registration',
-    'box.apps.BoxAppConfig',
-    'picking.apps.PickingAppConfig',
-    'reference.apps.ReferenceAppConfig',
-    'saleorder.apps.SaleOrderAppConfig',
-    'boxitem',
-    'saleorderitem',
+    'picking.box',
+    'picking.picking',
+    'picking.saleorder',
+    'picking.boxitem',
+    'picking.saleorderitem',
 ]
 
 THIRD_APPS = [
