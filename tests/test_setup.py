@@ -36,16 +36,8 @@ class TestSetup(APITestCase):
             format='json'
         )
 
-        print("RESPUESTA: " + str(response.data))
-        print("DATOS ENVIADOS: " + str({
-                'username': self.user.username,
-                'password': 'Manage123'
-            }))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         self.token = response.data['access_token']
-        self.client.credentials(HTTP_AUTHORIZATION='Bearer ' + self.token)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token)
         return super().setUp()
-    
-    def test_sadasdas(self):
-        pass
