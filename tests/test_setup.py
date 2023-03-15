@@ -7,8 +7,8 @@ faker = Faker()
 class TestSetup(APITestCase):
 
     def setUp(self):
-        from registration.models import User, Rol
-        from company.models import Company, Country, City
+        from sentry.registration.models import User, Rol
+        from sentry.company.models import Company, Country, City
 
         self.login_url = '/registration/login/'
 

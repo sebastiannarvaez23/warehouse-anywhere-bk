@@ -46,14 +46,14 @@ BASE_APPS = [
 ]
 
 LOCAL_APPS = [
-    'company',
-    'reference',
-    'registration',
-    'picking.box',
-    'picking.picking',
-    'picking.saleorder',
-    'picking.boxitem',
-    'picking.saleorderitem',
+    'sentry.company',
+    'sentry.registration',
+    'module.storage.reference',
+    'module.picking.box',
+    'module.picking.picking',
+    'module.picking.saleorder',
+    'module.picking.boxitem',
+    'module.picking.saleorderitem',
 ]
 
 THIRD_APPS = [
