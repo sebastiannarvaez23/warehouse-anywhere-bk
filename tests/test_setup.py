@@ -15,7 +15,7 @@ class TestSetup(APITestCase):
         Rol.objects.create(name='Administrador Tecnologico')
         country = Country.objects.create(code='57', name='Colombia')
         city = City.objects.create(name='Cali', country=country)
-        Company.objects.create(nit='1234', name='companytest', domain='co', location='co', city=city)
+        Company.objects.create(nit='1234', name='companytest', domain='co', address='co', city=city)
 
         
         self.user = User.objects.create_superuser(

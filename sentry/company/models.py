@@ -22,7 +22,7 @@ class Company(models.Model):
     nit = models.CharField(max_length=40)
     name = models.CharField(max_length=200, unique=True)
     domain = models.CharField(max_length=200, unique=True)
-    location = models.CharField(max_length=255)
+    address = models.CharField(max_length=255)
     city = models.ForeignKey(City, on_delete=models.DO_NOTHING)
     
     def __str__(self):

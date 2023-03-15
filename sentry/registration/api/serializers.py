@@ -1,7 +1,5 @@
 import jwt
 from wmsbk.settings import local as settings
-
-"""Users Serializers."""
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from rest_framework.authtoken.models import Token

@@ -1,6 +1,6 @@
 from rest_framework import status
 from tests.test_setup import TestSetup
-from tests.factories.saleorder.saleorder_factories import SaleOrderFactory
+from tests.picking.factories.saleorder.saleorder_factories import SaleOrderFactory
 
 class SaleOrderTestCase(TestSetup):
 
@@ -23,7 +23,3 @@ class SaleOrderTestCase(TestSetup):
         self.assertEqual(response.data['delivery_address'], saleorder.delivery_address)
         self.assertEqual(response.data['pay_term'], saleorder.pay_term.name)
         self.assertEqual(response.data['collection'], saleorder.collection.name)
-
-    def test_list_info_indicator(self):
-        saleorder = SaleOrderFactory().create_sale_order()
-        

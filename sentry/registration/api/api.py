@@ -1,16 +1,17 @@
+import time
+
 from rest_framework import status
-from rest_framework.views import APIView
+from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
-from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework import status
 from sentry.registration.api.serializers import (
     UserLoginSerializer,
     UserModelSerializer,
     UserSignUpSerializer
 )
-from rest_framework.response import Response
-import time
 
 # Create your views here.
 class UserLoginAPIView(APIView):
