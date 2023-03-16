@@ -5,25 +5,21 @@ from faker import Faker
 faker = Faker()
 
 class TestSetup(APITestCase):
-
     def setUp(self):
+        """Test that allows testing the registration and login of a user"""
         from sentry.registration.models import User, Rol
-        from sentry.company.models import Company, Country, City
+        from sentry.company.models import Company
 
         self.login_url = '/registration/login/'
-
-        Rol.objects.create(name='Administrador Tecnologico')
-        country = Country.objects.create(code='57', name='Colombia')
-        city = City.objects.create(name='Cali', country=country)
-        Company.objects.create(nit='1234', name='companytest', domain='co', address='co', city=city)
-
         
+        company = Company.objects.create(nit='1234', name='companytest', domain='co', address='co', country=faker.country(), region=faker.state(), city=faker.city())
         self.user = User.objects.create_superuser(
             username=faker.name(),
             email=faker.email(),
             first_name='First Name',
             last_name='Last Name',
             telephone='12345',
+            company=company.id,
             password='Manage123'
         )
 

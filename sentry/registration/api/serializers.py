@@ -42,13 +42,15 @@ class UserSignUpSerializer(serializers.Serializer):
     """ phone_regex = RegexValidator(
         regex=r'\+?1?\d{9,15}$',
         message="Phone number must be entered in the format: +9999999999. Up to 15 digits allowed."
-    )
-    phone_number = serializers.CharField(validators=[phone_regex]) """
+    )"""
+    telephone = serializers.CharField(min_length=10, max_length=15) 
     password = serializers.CharField(min_length=8, max_length=64)
     password_confirmation = serializers.CharField(min_length=8, max_length=64)
 
     first_name = serializers.CharField(min_length=2, max_length=30)
     last_name = serializers.CharField(min_length=2, max_length=30)
+
+    company = serializers.IntegerField()
 
     def validate(self, data):
         """Verify passwords match."""

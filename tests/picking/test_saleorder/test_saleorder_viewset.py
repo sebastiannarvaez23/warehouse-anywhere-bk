@@ -8,7 +8,6 @@ class SaleOrderTestCase(TestSetup):
 
     def test_list(self):
         saleorder = SaleOrderFactory().create_sale_order()
-        print(self.url + saleorder.no_sale_order)
         response = self.client.get(
             self.url + saleorder.no_sale_order + '/',
             format = 'json'

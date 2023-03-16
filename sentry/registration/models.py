@@ -4,15 +4,15 @@ from sentry.company.models import Company
 # Create your models here.
 
 class UserManager(BaseUserManager):
-    def _create_user(self, username, email, first_name, last_name, telephone, password, is_staff, is_superuser, **extra_fields):
+    def _create_user(self, username, email, first_name, last_name, telephone, company, password, is_staff, is_superuser, **extra_fields):
         user = self.model(
             username=username,
             email=email,
             first_name=first_name,
             last_name=last_name,
             telephone=telephone,
-            rol=Rol.objects.get(id=1),
-            company=Company.objects.get(id=1),
+            rol=Rol.objects.get_or_create(name='Administrador Tecnologico')[0],
+            company=Company.objects.get(id=company),
             is_staff=is_staff,
             is_superuser=is_superuser,
             **extra_fields
@@ -21,11 +21,11 @@ class UserManager(BaseUserManager):
         user.save(using=self.db)
         return user
 
-    def create_user(self, username, email, first_name, last_name, telephone, password=None, **extra_fields):
-        return self._create_user(username, email, first_name, last_name, telephone, password, False, False, **extra_fields)
+    def create_user(self, username, email, first_name, last_name, telephone, company, password=None, **extra_fields):
+        return self._create_user(username, email, first_name, last_name, telephone, company, password, False, False, **extra_fields)
     
-    def create_superuser(self, username, email, first_name, last_name, telephone, password=None, **extra_fields):
-        return self._create_user(username, email, first_name, last_name, telephone, password, True, True, **extra_fields)
+    def create_superuser(self, username, email, first_name, last_name, telephone, company, password=None, **extra_fields):
+        return self._create_user(username, email, first_name, last_name, telephone, company, password, True, True, **extra_fields)
 
 class Rol(models.Model):
     id = models.AutoField(primary_key=True, verbose_name="id")
@@ -43,7 +43,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     picture = models.ImageField(upload_to='perfil/', max_length=200, blank=True, null=True, verbose_name="Foto de perfil")
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
-    rol = models.ForeignKey(Rol, on_delete=models.PROTECT, verbose_name="Rol")
+    rol = models.ForeignKey(Rol, on_delete=models.PROTECT)
     company = models.ForeignKey(Company, on_delete=models.DO_NOTHING)
     objects = UserManager()
 

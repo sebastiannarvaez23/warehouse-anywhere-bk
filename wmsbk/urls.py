@@ -38,6 +38,7 @@ urlpatterns = [
     path('saleorder/', include('module.picking.saleorder.api.urls')),
     path('saleorderitem/', include('module.picking.saleorderitem.api.urls')),
     path('registration/', include('sentry.registration.api.urls')),
+    path('company/', include('sentry.company.api.urls')),
 ]
 
 urlpatterns += [

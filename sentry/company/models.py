@@ -1,29 +1,15 @@
 from django.db import models
 
-# Create your models here.
-class Country(models.Model):
-    id = models.AutoField(primary_key=True)
-    code = models.CharField(max_length=5, unique=True)
-    name = models.CharField(max_length=200, unique=True)
-
-    def __str__(self):
-        return self.name
-    
-class City(models.Model):
-    id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=200)
-    country = models.ForeignKey(Country, on_delete=models.DO_NOTHING)
-
-    def __str__(self):
-        return self.name
-    
+# Create your models here.    
 class Company(models.Model):
     id = models.AutoField(primary_key=True)
     nit = models.CharField(max_length=40)
     name = models.CharField(max_length=200, unique=True)
     domain = models.CharField(max_length=200, unique=True)
     address = models.CharField(max_length=255)
-    city = models.ForeignKey(City, on_delete=models.DO_NOTHING)
+    country = models.CharField(max_length=255)
+    region = models.CharField(max_length=255)
+    city = models.CharField(max_length=255)
     
     def __str__(self):
         return self.name
