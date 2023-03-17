@@ -1,13 +1,15 @@
 from pathlib import Path
 import environ
 
-# environ init
+# ENVIRON CONF
+
 env = environ.Env()
 environ.Env.read_env()
 
+# ---
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -17,10 +19,9 @@ SECRET_KEY = env.str('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool('DEBUG', default=False)
-
 ALLOWED_HOSTS = ['*']
 
-# CORS HTTPONLY
+# CORS HTTPONLY CONF ---
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_WHITELIST = (
@@ -34,7 +35,9 @@ SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = None
 SESSION_COOKIE_SECURE = False
 
-# Application definition
+# ---
+
+# APPS THIRD 
 
 THIRD_APPS = [
     'corsheaders',
@@ -43,12 +46,19 @@ THIRD_APPS = [
     'rest_framework.authtoken',
 ]
 
-# -- TENANT APPS
+# -- TENANT CONF
+
+MULTI_TENANT = True
+TENANT_MODEL = 'company.Company'
+TENANT_DOMAIN_MODEL = "company.Domain"
+
+DATABASE_ROUTERS = (
+    'django_tenants.routers.TenantSyncRouter',
+)
 
 SHARED_APPS = [
     'django_tenants',
     'sentry.company',
-
     'sentry.registration',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -66,9 +76,13 @@ TENANT_APPS = [
     'module.picking.boxitem',
     'module.picking.saleorderitem'
 ]
+
+# ---
+
 INSTALLED_APPS = list(SHARED_APPS) + [app for app in TENANT_APPS if app not in SHARED_APPS]
 
-# SSL / TLS
+# SSL / TLS CONF
+
 SECURE_SSL_REDIRECT = False
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 if DEBUG:
@@ -80,7 +94,10 @@ if DEBUG:
     SSLKEY = '/path/to/key.pem'
     # Opcionalmente, puedes agregar SSL_VERSION para especificar la versión de SSL/TLS que deseas utilizar.
 
-# DRF
+# ---
+
+# DRF CONF
+
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES':(
         'rest_framework.renderers.JSONRenderer',
@@ -89,6 +106,8 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ),
 }
+
+# ---
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
@@ -163,20 +182,7 @@ USE_I18N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.1/howto/static-files/
-
-STATIC_URL = 'static/'
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-TENANT_MODEL = 'company.Company'
-TENANT_DOMAIN_MODEL = "company.Domain"
-
-DATABASE_ROUTERS = (
-    'django_tenants.routers.TenantSyncRouter',
-)
