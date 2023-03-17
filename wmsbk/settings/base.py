@@ -18,7 +18,7 @@ SECRET_KEY = env.str('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool('DEBUG', default=False)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # CORS HTTPONLY
 CORS_ORIGIN_ALLOW_ALL = False
@@ -36,26 +36,6 @@ SESSION_COOKIE_SECURE = False
 
 # Application definition
 
-BASE_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-]
-
-LOCAL_APPS = [
-    'sentry.company',
-    'sentry.registration',
-    'module.storage.reference',
-    'module.picking.box',
-    'module.picking.picking',
-    'module.picking.saleorder',
-    'module.picking.boxitem',
-    'module.picking.saleorderitem',
-]
-
 THIRD_APPS = [
     'corsheaders',
     'drf_yasg',
@@ -63,7 +43,30 @@ THIRD_APPS = [
     'rest_framework.authtoken',
 ]
 
-INSTALLED_APPS = BASE_APPS + LOCAL_APPS + THIRD_APPS
+# -- TENANT APPS
+
+SHARED_APPS = [
+    'django_tenants',
+    'sentry.company',
+
+    'sentry.registration',
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles'
+] + THIRD_APPS
+
+TENANT_APPS = [
+    'module.storage.reference',
+    'module.picking.box',
+    'module.picking.picking',
+    'module.picking.saleorder',
+    'module.picking.boxitem',
+    'module.picking.saleorderitem'
+]
+INSTALLED_APPS = list(SHARED_APPS) + [app for app in TENANT_APPS if app not in SHARED_APPS]
 
 # SSL / TLS
 SECURE_SSL_REDIRECT = False
@@ -92,6 +95,7 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 MIDDLEWARE = [
+    'django_tenants.middleware.main.TenantMainMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -169,3 +173,10 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+TENANT_MODEL = 'company.Company'
+TENANT_DOMAIN_MODEL = "company.Domain"
+
+DATABASE_ROUTERS = (
+    'django_tenants.routers.TenantSyncRouter',
+)
