@@ -5,14 +5,16 @@ faker = Faker()
 
 class CompanyFactory:
 
+    domain = faker.domain_name()
+
     def build_company_JSON(self):
         return {
+            'schema_name': self.domain,
             'nit': str(faker.random_number(digits=10)),
             'name': faker.company(),
-            'domain': faker.domain_name(),
             'address': faker.address(),
             'country': faker.country(),
-            'region': faker.state(),
+            'state': faker.state(),
             'city': faker.city()
         }
     

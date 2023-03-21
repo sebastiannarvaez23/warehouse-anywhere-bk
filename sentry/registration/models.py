@@ -53,6 +53,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         'first_name',
         'last_name',
         'telephone',
+        'company'
     ]
 
     def __str__(self):

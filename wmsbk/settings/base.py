@@ -49,8 +49,9 @@ THIRD_APPS = [
 # -- TENANT CONF
 
 MULTI_TENANT = True
-TENANT_MODEL = 'company.Company'
+TENANT_MODEL = "company.Company"
 TENANT_DOMAIN_MODEL = "company.Domain"
+PUBLIC_SCHEMA_NAME = "public"
 
 DATABASE_ROUTERS = (
     'django_tenants.routers.TenantSyncRouter',
@@ -92,8 +93,6 @@ if DEBUG:
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     SSLCERTIFICATE = '/path/to/cert.pem'
     SSLKEY = '/path/to/key.pem'
-    # Opcionalmente, puedes agregar SSL_VERSION para especificar la versión de SSL/TLS que deseas utilizar.
-
 # ---
 
 # DRF CONF
@@ -138,8 +137,8 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
-                'django.template.context_processors.debug',
                 'django.template.context_processors.request',
+                'django.template.context_processors.debug',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
