@@ -44,7 +44,6 @@ THIRD_APPS = [
     'corsheaders',
     'drf_yasg',
     'rest_framework',
-    'rest_framework.authtoken',
 ]
 
 # -- TENANT CONF
@@ -78,6 +77,7 @@ TENANT_APPS = [
     'module.picking.saleorder',
     'module.picking.boxitem',
     'module.picking.saleorderitem',
+    'rest_framework.authtoken',
     'django.contrib.contenttypes',
     'django.contrib.auth',
     'django.contrib.sessions',

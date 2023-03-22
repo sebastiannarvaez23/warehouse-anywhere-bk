@@ -5,6 +5,7 @@ class CompanySerializer(serializers.ModelSerializer):
     class Meta:
         model = Company
         fields = (
+            'id',
             'schema_name',
             'nit',
             'name',
