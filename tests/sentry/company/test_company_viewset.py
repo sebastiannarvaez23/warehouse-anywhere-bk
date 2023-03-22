@@ -4,7 +4,7 @@ from sentry.company.models import Company
 from tests.sentry.factories.company.company_factories import CompanyFactory
 
 class CompanyTestCase(TestSetup):
-    url = '/company/'
+    url = 'http://tenant1.localhost:8000/company/'
 
     def test_create_company(self):
         company = CompanyFactory().build_company_JSON()

@@ -22,6 +22,7 @@ DEBUG = env.bool('DEBUG', default=False)
 ALLOWED_HOSTS = ['*']
 
 # CORS HTTPONLY CONF ---
+
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_WHITELIST = (
@@ -61,21 +62,28 @@ SHARED_APPS = [
     'django_tenants',
     'sentry.company',
     'sentry.registration',
-    'django.contrib.admin',
-    'django.contrib.auth',
     'django.contrib.contenttypes',
+    'django.contrib.auth',
     'django.contrib.sessions',
+    'django.contrib.admin',
     'django.contrib.messages',
-    'django.contrib.staticfiles'
+    'django.contrib.staticfiles',
 ] + THIRD_APPS
 
 TENANT_APPS = [
+    'sentry.registration',
     'module.storage.reference',
     'module.picking.box',
     'module.picking.picking',
     'module.picking.saleorder',
     'module.picking.boxitem',
-    'module.picking.saleorderitem'
+    'module.picking.saleorderitem',
+    'django.contrib.contenttypes',
+    'django.contrib.auth',
+    'django.contrib.sessions',
+    'django.contrib.admin',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
 ]
 
 # ---
@@ -84,15 +92,15 @@ INSTALLED_APPS = list(SHARED_APPS) + [app for app in TENANT_APPS if app not in S
 
 # SSL / TLS CONF
 
-SECURE_SSL_REDIRECT = False
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-if DEBUG:
-    INSTALLED_APPS += ['sslserver']
-    # Puedes configurar el puerto y las rutas que desees.
-    # En este ejemplo, se ejecuta en el puerto 8000 con SSL/TLS activado.
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-    SSLCERTIFICATE = '/path/to/cert.pem'
-    SSLKEY = '/path/to/key.pem'
+# SECURE_SSL_REDIRECT = False
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# if DEBUG:
+#     INSTALLED_APPS += ['sslserver']
+#     # Puedes configurar el puerto y las rutas que desees.
+#     # En este ejemplo, se ejecuta en el puerto 8000 con SSL/TLS activado.
+#     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+#     SSLCERTIFICATE = '/path/to/cert.pem'
+#     SSLKEY = '/path/to/key.pem'
 # ---
 
 # DRF CONF

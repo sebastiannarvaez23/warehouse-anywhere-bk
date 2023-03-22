@@ -5,7 +5,7 @@ faker = Faker()
 
 class CompanyFactory:
 
-    domain = faker.domain_name()
+    domain = 'tenant1.localhost'
 
     def build_company_JSON(self):
         return {
