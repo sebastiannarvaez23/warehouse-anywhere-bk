@@ -5,7 +5,7 @@ from django_tenants.models import DomainMixin, TenantMixin
 class Company(TenantMixin):
     id = models.AutoField(primary_key=True)
     nit = models.CharField(max_length=40)
-    name = models.CharField(max_length=200, unique=True)
+    name = models.CharField(max_length=200)
     address = models.CharField(max_length=255)
     country = models.CharField(max_length=255)
     state = models.CharField(max_length=255)

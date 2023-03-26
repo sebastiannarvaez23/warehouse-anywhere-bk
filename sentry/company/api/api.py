@@ -1,5 +1,8 @@
 import time
 
+# Django
+from django.core.exceptions import PermissionDenied
+
 # restframework
 from rest_framework import viewsets, status
 from rest_framework.response import Response
@@ -12,6 +15,19 @@ class CompanyViewSet(viewsets.ModelViewSet):
     """Company view set."""
     queryset = Company.objects.all()
     serializer_class = CompanySerializer
+
+    def list(self, request, *args, **kwargs):
+        company = kwargs.get('nitcompany')
+        if company is not None:
+            try:
+                self.queryset = self.queryset.filter(nit = company)
+                response = super().list(request, *args, **kwargs)
+                response.data = response.data[0]
+            except:
+                return Response(status=status.HTTP_404_NOT_FOUND)
+        if not company:
+            raise PermissionDenied('A nosaleorder parameter is required.')
+        return response
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
