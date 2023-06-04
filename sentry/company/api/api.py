@@ -11,6 +11,7 @@ from rest_framework.response import Response
 from sentry.company.models import Company, Domain
 from sentry.company.api.serializers import CompanySerializer
 
+
 class CompanyViewSet(viewsets.ModelViewSet):
     """Company view set."""
     queryset = Company.objects.all()
@@ -20,7 +21,7 @@ class CompanyViewSet(viewsets.ModelViewSet):
         company = kwargs.get('nitcompany')
         if company is not None:
             try:
-                self.queryset = self.queryset.filter(nit = company)
+                self.queryset = self.queryset.filter(nit=company)
                 response = super().list(request, *args, **kwargs)
                 response.data = response.data[0]
             except:
@@ -30,6 +31,7 @@ class CompanyViewSet(viewsets.ModelViewSet):
         return response
 
     def create(self, request, *args, **kwargs):
+        print(request.build_absolute_uri())
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
@@ -44,7 +46,7 @@ class CompanyViewSet(viewsets.ModelViewSet):
         )
 
         domain = Domain()
-        domain.domain = request.data['schema_name']
+        domain.domain = request.data['schema_name'] + ".localhost"
         domain.is_primary = True
         domain.tenant = company
         domain.save()

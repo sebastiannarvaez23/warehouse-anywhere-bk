@@ -38,7 +38,7 @@ SESSION_COOKIE_SECURE = False
 
 # ---
 
-# APPS THIRD 
+# APPS THIRD
 
 THIRD_APPS = [
     'corsheaders',
@@ -51,7 +51,9 @@ THIRD_APPS = [
 MULTI_TENANT = True
 TENANT_MODEL = "company.Company"
 TENANT_DOMAIN_MODEL = "company.Domain"
+TENANT_PUBLIC_SCHEMA = 'public'
 PUBLIC_SCHEMA_NAME = "public"
+SHOW_PUBLIC_IF_NO_TENANT_FOUND = True
 
 DATABASE_ROUTERS = (
     'django_tenants.routers.TenantSyncRouter',
@@ -61,6 +63,7 @@ SHARED_APPS = [
     'django_tenants',
     'sentry.company',
     'sentry.registration',
+    'rest_framework.authtoken',
     'django.contrib.contenttypes',
     'django.contrib.auth',
     'django.contrib.sessions',
@@ -70,25 +73,18 @@ SHARED_APPS = [
 ] + THIRD_APPS
 
 TENANT_APPS = [
-    'sentry.registration',
     'module.storage.reference',
     'module.picking.box',
     'module.picking.picking',
     'module.picking.saleorder',
     'module.picking.boxitem',
     'module.picking.saleorderitem',
-    'rest_framework.authtoken',
-    'django.contrib.contenttypes',
-    'django.contrib.auth',
-    'django.contrib.sessions',
-    'django.contrib.admin',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
 ]
 
 # ---
 
-INSTALLED_APPS = list(SHARED_APPS) + [app for app in TENANT_APPS if app not in SHARED_APPS]
+INSTALLED_APPS = list(SHARED_APPS) + \
+    [app for app in TENANT_APPS if app not in SHARED_APPS]
 
 # SSL / TLS CONF
 
@@ -106,7 +102,7 @@ INSTALLED_APPS = list(SHARED_APPS) + [app for app in TENANT_APPS if app not in S
 # DRF CONF
 
 REST_FRAMEWORK = {
-    'DEFAULT_RENDERER_CLASSES':(
+    'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -137,6 +133,7 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 ROOT_URLCONF = 'wmsbk.urls'
+PUBLIC_SCHEMA_URLCONF = 'wmsbk.urls_public'
 
 TEMPLATES = [
     {
