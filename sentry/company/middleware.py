@@ -1,8 +1,6 @@
 from django.contrib import messages
 from sentry.company.models import Domain
-from django.shortcuts import render
 from django.shortcuts import redirect
-from django.contrib.auth.views import LoginView
 from django.contrib.auth import logout as auth_logout
 
 
