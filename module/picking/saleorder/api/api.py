@@ -1,3 +1,4 @@
+import time
 # Django
 from django.core.exceptions import PermissionDenied
 
@@ -32,16 +33,13 @@ class SaleOrderViewSet(viewsets.ModelViewSet):
         return response
 
     def list_info_indicator(self, request, *args, **kwargs):
+        schema_name = request.user.company.schema_name
         name_customer = kwargs.get('namecustomer')
         no_sale_order = kwargs.get('nosaleorder')
-        picking_quantity_by_customer = ConnDB(
-        ).get_picking_quantity_by_customer(name_customer)
-        request_quantity_by_customer = ConnDB(
-        ).get_request_quantity_by_customer(name_customer)
-        picking_quantity_by_saleorder = ConnDB(
-        ).get_picking_quantity_by_saleorder(no_sale_order)
-        request_quantity_by_saleorder = ConnDB(
-        ).get_request_quantity_by_saleorder(no_sale_order)
+        picking_quantity_by_customer = ConnDB().get_picking_quantity_by_customer(name_customer, schema_name)
+        request_quantity_by_customer = ConnDB().get_request_quantity_by_customer(name_customer, schema_name)
+        picking_quantity_by_saleorder = ConnDB().get_picking_quantity_by_saleorder(no_sale_order, schema_name)
+        request_quantity_by_saleorder = ConnDB().get_request_quantity_by_saleorder(no_sale_order, schema_name)
         response = {
             "picking_quantity_by_customer": picking_quantity_by_customer['quantity'],
             "request_quantity_by_customer": request_quantity_by_customer['quantity'],

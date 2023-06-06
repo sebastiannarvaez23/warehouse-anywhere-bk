@@ -23,11 +23,11 @@ class ConnSQLite3:
         except Exception as e:
             print(e)
         
-    def get_picking_quantity_by_customer(self, name_customer):
+    def get_picking_quantity_by_customer(self, name_customer, schema_name):
         """
          Suma todas las referencias que tengo despachadas de un cliente
         """
-        sql = query_get_picking_quantity_by_customer(name_customer)
+        sql = query_get_picking_quantity_by_customer(name_customer, schema_name)
         try:
             self.cursor.execute(sql)
             data = self.cursor.fetchone()
@@ -42,11 +42,11 @@ class ConnSQLite3:
             print(f"Ocurrio un error al consultar la base de datos.\nError: {e}\n")
             raise
 
-    def get_request_quantity_by_customer(self, name_customer):
+    def get_request_quantity_by_customer(self, name_customer, schema_name):
         """
         Suma todas las referencias que tengo solicitadas por un cliente
         """
-        sql = query_get_request_quantity_by_customer(name_customer)
+        sql = query_get_request_quantity_by_customer(name_customer, schema_name)
         try:
             self.cursor.execute(sql)
             data = self.cursor.fetchone()
@@ -61,11 +61,11 @@ class ConnSQLite3:
             print(f"Ocurrio un error al consultar la base de datos.\nError: {e}\n")
             raise
 
-    def get_picking_quantity_by_saleorder(self, sale_order):
+    def get_picking_quantity_by_saleorder(self, sale_order, schema_name):
         """
         Suma todas las referencias que tengo despachadas de una orden de venta
         """
-        sql = query_get_picking_quantity_by_saleorder(sale_order)
+        sql = query_get_picking_quantity_by_saleorder(sale_order, schema_name)
         try:
             self.cursor.execute(sql)
             data = self.cursor.fetchone()
@@ -80,11 +80,11 @@ class ConnSQLite3:
             print(f"Ocurrio un error al consultar la base de datos.\nError: {e}\n")
             raise
 
-    def get_request_quantity_by_saleorder(self, sale_order):
+    def get_request_quantity_by_saleorder(self, sale_order, schema_name):
         """
         Suma todas las referencias que tengo solicitadas de una orden de venta
         """
-        sql = query_get_request_quantity_by_saleorder(sale_order)
+        sql = query_get_request_quantity_by_saleorder(sale_order, schema_name)
         try:
             self.cursor.execute(sql)
             data = self.cursor.fetchone()

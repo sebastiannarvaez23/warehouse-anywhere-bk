@@ -1,4 +1,4 @@
-def query_get_picking_quantity_by_customer(name_customer):
+def query_get_picking_quantity_by_customer(name_customer, schema):
     """Suma todas las referencias que tengo despachadas de un cliente"""
     sql = f"""
         SELECT 
@@ -8,16 +8,16 @@ def query_get_picking_quantity_by_customer(name_customer):
 				ELSE SUM(T3.quantity)
 			END
         FROM
-            saleorder_saleorder T0
-            INNER JOIN picking_picking T1 ON T0.id = T1.sale_order_id
-            INNER JOIN box_box T2 ON T1.id = T2.picking_id
-            INNER JOIN boxitem_boxitem T3 ON T2.id = T3.box_id
+            {schema}.saleorder_saleorder T0
+            INNER JOIN {schema}.picking_picking T1 ON T0.id = T1.sale_order_id
+            INNER JOIN {schema}.box_box T2 ON T1.id = T2.picking_id
+            INNER JOIN {schema}.boxitem_boxitem T3 ON T2.id = T3.box_id
         WHERE
             T0.customer_name = '{name_customer}'
     """
     return sql
 
-def query_get_request_quantity_by_customer(name_customer):
+def query_get_request_quantity_by_customer(name_customer, schema):
     """Suma todas las referencias que tengo solicitadas por un cliente"""
     sql = f"""
         SELECT
@@ -27,14 +27,14 @@ def query_get_request_quantity_by_customer(name_customer):
 				ELSE SUM(T1.quantity)
 			END
         FROM
-            saleorder_saleorder T0
-            INNER JOIN saleorderitem_saleorderitem T1 ON T0.id = T1.sale_order_id
+            {schema}.saleorder_saleorder T0
+            INNER JOIN {schema}.saleorderitem_saleorderitem T1 ON T0.id = T1.sale_order_id
         WHERE
             T0.customer_name = '{name_customer}'
     """
     return sql
 
-def query_get_picking_quantity_by_saleorder(sale_order):
+def query_get_picking_quantity_by_saleorder(sale_order, schema):
     """Suma todas las referencias que tengo despachadas de una orden de venta"""
     sql = f"""
         SELECT
@@ -44,16 +44,16 @@ def query_get_picking_quantity_by_saleorder(sale_order):
 				ELSE SUM(T3.quantity)
 			END
         FROM
-            saleorder_saleorder T0
-            INNER JOIN picking_picking T1 ON T0.id = T1.sale_order_id
-            INNER JOIN box_box T2 ON T1.id = T2.picking_id
-            INNER JOIN boxitem_boxitem T3 ON T2.id = T3.box_id
+            {schema}.saleorder_saleorder T0
+            INNER JOIN {schema}.picking_picking T1 ON T0.id = T1.sale_order_id
+            INNER JOIN {schema}.box_box T2 ON T1.id = T2.picking_id
+            INNER JOIN {schema}.boxitem_boxitem T3 ON T2.id = T3.box_id
         WHERE
             T0.no_sale_order = '{sale_order}'
     """
     return sql
 
-def query_get_request_quantity_by_saleorder(sale_order):
+def query_get_request_quantity_by_saleorder(sale_order, schema):
     """Suma todas las referencias que tengo solicitadas de una orden de venta"""
     sql = f"""
         SELECT
@@ -63,8 +63,8 @@ def query_get_request_quantity_by_saleorder(sale_order):
 				ELSE SUM(T1.quantity)
 			END
         FROM
-            saleorder_saleorder T0
-            INNER JOIN saleorderitem_saleorderitem T1 ON T0.id = T1.sale_order_id
+            {schema}.saleorder_saleorder T0
+            INNER JOIN {schema}.saleorderitem_saleorderitem T1 ON T0.id = T1.sale_order_id
         WHERE
             T0.no_sale_order = '{sale_order}'
     """
