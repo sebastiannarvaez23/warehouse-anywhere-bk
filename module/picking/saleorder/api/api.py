@@ -9,11 +9,14 @@ from rest_framework.response import Response
 from module.picking.saleorder.models import SaleOrder
 from module.picking.saleorder.api.serializers import SaleOrderSerializer
 from module.picking.saleorder.postgresql.conn import ConnSQLite3 as ConnDB
+from module.picking.saleorder.permissions import IsCompanyObject
+
 
 class SaleOrderViewSet(viewsets.ModelViewSet):
     """View Set class SaleOrderAPIView"""
     queryset = SaleOrder.objects.all()
     serializer_class = SaleOrderSerializer
+    permission_classes = [IsCompanyObject]
 
     def list(self, request, *args, **kwargs):
         saleorder = kwargs.get('nosaleorder')
@@ -31,15 +34,18 @@ class SaleOrderViewSet(viewsets.ModelViewSet):
     def list_info_indicator(self, request, *args, **kwargs):
         name_customer = kwargs.get('namecustomer')
         no_sale_order = kwargs.get('nosaleorder')
-        picking_quantity_by_customer = ConnDB().get_picking_quantity_by_customer(name_customer)
-        request_quantity_by_customer = ConnDB().get_request_quantity_by_customer(name_customer)
-        picking_quantity_by_saleorder = ConnDB().get_picking_quantity_by_saleorder(no_sale_order)
-        request_quantity_by_saleorder = ConnDB().get_request_quantity_by_saleorder(no_sale_order)
+        picking_quantity_by_customer = ConnDB(
+        ).get_picking_quantity_by_customer(name_customer)
+        request_quantity_by_customer = ConnDB(
+        ).get_request_quantity_by_customer(name_customer)
+        picking_quantity_by_saleorder = ConnDB(
+        ).get_picking_quantity_by_saleorder(no_sale_order)
+        request_quantity_by_saleorder = ConnDB(
+        ).get_request_quantity_by_saleorder(no_sale_order)
         response = {
-            "picking_quantity_by_customer":picking_quantity_by_customer['quantity'],
-            "request_quantity_by_customer":request_quantity_by_customer['quantity'],
-            "picking_quantity_by_saleorder":picking_quantity_by_saleorder['quantity'],
-            "request_quantity_by_saleorder":request_quantity_by_saleorder['quantity'],
+            "picking_quantity_by_customer": picking_quantity_by_customer['quantity'],
+            "request_quantity_by_customer": request_quantity_by_customer['quantity'],
+            "picking_quantity_by_saleorder": picking_quantity_by_saleorder['quantity'],
+            "request_quantity_by_saleorder": request_quantity_by_saleorder['quantity'],
         }
         return Response(response)
-    
