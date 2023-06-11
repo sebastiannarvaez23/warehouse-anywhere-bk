@@ -1,7 +1,6 @@
 from rest_framework import status
 from datetime import datetime
 
-
 def add_consumption_detail_decorator(view_func):
     def wrapper(*args, **kwargs):
         response = view_func(*args, **kwargs)
@@ -14,5 +13,4 @@ def add_consumption_detail_decorator(view_func):
             "data": response.data,
         }
         return response
-
     return wrapper

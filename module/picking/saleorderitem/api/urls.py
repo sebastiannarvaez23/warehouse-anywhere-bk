@@ -5,5 +5,5 @@ from django.urls import path
 from module.picking.saleorderitem.api.api import SaleOrderItemViewSet
 
 urlpatterns = [
-    path('<str:nosaleorder>/', SaleOrderItemViewSet.as_view({'get': 'list'})),
+    path('<str:nosaleorder>/', SaleOrderItemViewSet.as_view({'get': 'list'}), name="saleorderitem"),
 ]

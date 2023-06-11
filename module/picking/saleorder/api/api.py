@@ -1,9 +1,5 @@
 import time
 
-# Django
-from django.core.exceptions import PermissionDenied
-from datetime import datetime
-
 # restframework
 from rest_framework import viewsets, status
 from rest_framework.response import Response
@@ -12,7 +8,7 @@ from rest_framework.response import Response
 from module.picking.saleorder.models import SaleOrder
 from module.picking.saleorder.api.serializers import SaleOrderSerializer
 from module.picking.saleorder.postgresql.conn import ConnSQLite3 as ConnDB
-from wmsbk.mixins.apimixin import APIMixin
+from wmsbk.customs.mixins import APIMixin
 from wmsbk.decorators.response import add_consumption_detail_decorator
 
 
@@ -25,11 +21,11 @@ class SaleOrderViewSet(APIMixin, viewsets.ModelViewSet):
 
     @add_consumption_detail_decorator
     def list(self, request, *args, **kwargs):
+        response = super().list(request, *args, **kwargs)
         saleorder = kwargs.get("nosaleorder")
         self.queryset = self.queryset.filter(no_sale_order=saleorder)
         if not self.queryset:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-        response = super().list(request, *args, **kwargs)
+            return response(status=status.HTTP_404_NOT_FOUND)
         response.data = response.data[0]
         response.next_url = self.get_next_url(
             request, "no_sale_order", saleorder, "saleorder"
