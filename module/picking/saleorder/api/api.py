@@ -14,7 +14,6 @@ from module.picking.saleorder.api.serializers import SaleOrderSerializer
 from module.picking.saleorder.postgresql.conn import ConnSQLite3 as ConnDB
 from wmsbk.mixins.apimixin import APIMixin
 from wmsbk.decorators.response import add_consumption_detail_decorator
-from rest_framework.reverse import reverse
 
 
 class SaleOrderViewSet(APIMixin, viewsets.ModelViewSet):
@@ -22,22 +21,18 @@ class SaleOrderViewSet(APIMixin, viewsets.ModelViewSet):
 
     queryset = SaleOrder.objects.all()
     serializer_class = SaleOrderSerializer
+    model = SaleOrder
 
     @add_consumption_detail_decorator
     def list(self, request, *args, **kwargs):
         saleorder = kwargs.get("nosaleorder")
-
-        if saleorder is None:
-            raise PermissionDenied()
-
         self.queryset = self.queryset.filter(no_sale_order=saleorder)
         if not self.queryset:
             return Response(status=status.HTTP_404_NOT_FOUND)
-
         response = super().list(request, *args, **kwargs)
         response.data = response.data[0]
         response.next_url = self.get_next_url(
-            request, SaleOrder, "no_sale_order", saleorder, "saleorder"
+            request, "no_sale_order", saleorder, "saleorder"
         )
         return response
 
