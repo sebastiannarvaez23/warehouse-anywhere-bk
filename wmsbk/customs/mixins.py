@@ -31,11 +31,17 @@ class APIMixin:
 
     def custom_response_201(self, response):
         response.status_code = status.HTTP_201_CREATED
-        response.message = "The item has been created successfully"
+        response.message = "The item has been created successfully."
+        return response
+    
+    def custom_response_204(self, response):
+        response.status_code = status.HTTP_404_NOT_FOUND
+        response.message = "The item has been deleted successfully."
+        response.data = []
         return response
 
     def custom_response_404(self, response):
         response.status_code = status.HTTP_404_NOT_FOUND
-        response.message = "The resource requested is not available"
+        response.message = "The resource requested is not available."
         response.data = []
         return response

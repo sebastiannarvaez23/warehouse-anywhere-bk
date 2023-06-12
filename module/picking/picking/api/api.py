@@ -32,11 +32,13 @@ class PickingViewSet(APIMixin, viewsets.ModelViewSet):
         saleorder = SaleOrder.objects.get(no_doc=saleorder_arg)
         if not saleorder:
             return self.custom_response_404(response)
-        self.queryset = self.queryset.filter(sale_order=saleorder)
+        queryset = self.queryset.filter(sale_order=saleorder)
+        serializer = PickingSerializer(queryset, many=True)
+        response.data = serializer.data
         response = self.custom_response_200(response, response.data)
         return response
 
-    
+    @add_consumption_detail_decorator
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -45,7 +47,6 @@ class PickingViewSet(APIMixin, viewsets.ModelViewSet):
         status_picking = Status.objects.get(name='PP')
         sale_order = SaleOrder.objects.get(no_doc=request.data['sale_order'])
         
-        # Creamos un nuevo objeto Picking
         picking = Picking.objects.create(
             status=status_picking,
             responsible=responsible,
@@ -53,4 +54,5 @@ class PickingViewSet(APIMixin, viewsets.ModelViewSet):
         )
 
         serializer = self.get_serializer(instance=picking)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        response = self.custom_response_201(Response(serializer.data, status=status.HTTP_201_CREATED))
+        return response

@@ -26,15 +26,17 @@ class BoxItemViewSet(APIMixin, viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
         box = kwargs.get('box')
-        box = Box.objects.filter(id=box)
+        box = Box.objects.get(id=box)
 
         if not box:
             return self.custom_response_404(response)
-        
-        self.queryset = self.queryset.filter(box=box[0])            
+        queryset = self.queryset.filter(box=box)            
+        serializer = BoxItemSerializer(queryset, many=True)
+        response.data = serializer.data
         response = self.custom_response_200(response, response.data)
         return response
 
+    @add_consumption_detail_decorator
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -49,4 +51,5 @@ class BoxItemViewSet(APIMixin, viewsets.ModelViewSet):
         )
 
         serializer = self.get_serializer(instance=boxitem)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        response = self.custom_response_201(Response(serializer.data, status=status.HTTP_201_CREATED))
+        return response
