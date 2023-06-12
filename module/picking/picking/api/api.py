@@ -31,11 +31,9 @@ class PickingViewSet(APIMixin, viewsets.ModelViewSet):
         saleorder_arg = kwargs.get('saleorder')
         saleorder = SaleOrder.objects.get(no_doc=saleorder_arg)
         if not saleorder:
-            return Response(status=status.HTTP_404_NOT_FOUND)
+            return self.custom_response_404(response)
         self.queryset = self.queryset.filter(sale_order=saleorder)
-        response.next_url = self.get_next_url(
-            request, "sale_order", saleorder_arg, "saleorderitem"
-        )
+        response = self.custom_response_200(response, response.data)
         return response
 
     

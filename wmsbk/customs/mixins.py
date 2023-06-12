@@ -24,19 +24,18 @@ class APIMixin:
         return None
     
     def custom_response_200(self, response, data):
-        response.status = status.HTTP_200_OK
+        response.status_code = status.HTTP_200_OK
         response.message = "OK"
         response.data = data
         return response
 
     def custom_response_201(self, response):
-        response.status = status.HTTP_201_CREATED
+        response.status_code = status.HTTP_201_CREATED
         response.message = "The item has been created successfully"
         return response
 
     def custom_response_404(self, response):
         response.status_code = status.HTTP_404_NOT_FOUND
-        response.status = status.HTTP_404_NOT_FOUND
         response.message = "The resource requested is not available"
         response.data = []
         return response

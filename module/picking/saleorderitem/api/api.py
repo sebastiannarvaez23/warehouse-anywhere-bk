@@ -27,5 +27,5 @@ class SaleOrderItemViewSet(APIMixin, viewsets.ModelViewSet):
         if not saleorder:
             return self.custom_response_404(response)
         self.queryset = self.queryset.filter(sale_order=saleorder[0])
-        response = self.custom_response_200(response, response.data[0])
+        response = self.custom_response_200(response, response.data)
         return response

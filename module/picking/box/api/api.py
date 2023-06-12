@@ -1,3 +1,4 @@
+
 # Django
 from django.core.exceptions import PermissionDenied
 from sentry.registration.models import User  
@@ -11,25 +12,30 @@ from rest_framework.permissions import IsAuthenticated
 from module.picking.picking.models import Picking
 from module.picking.box.models import Box, Dimension
 from module.picking.box.api.serializers import BoxSerializer, DimensionSerializer
+from wmsbk.customs.mixins import APIMixin
 
-class BoxViewSet(viewsets.ModelViewSet):
+# decorators
+from wmsbk.decorators.response import add_consumption_detail_decorator
+
+class BoxViewSet(APIMixin, viewsets.ModelViewSet):
     """Box view set."""
     queryset = Box.objects.all()
+    model = Box
     serializer_class = BoxSerializer
     permission_classes = (IsAuthenticated,)
 
+    @add_consumption_detail_decorator
     def list(self, request, *args, **kwargs):
+        response = super().list(request, *args, **kwargs)
         picking = kwargs.get('picking')
-        picking = Picking.objects.get(id=picking)
+        picking = Picking.objects.filter(id=picking)
 
-        if picking is not None:
-            try:
-                self.queryset = self.queryset.filter(picking=picking)
-            except:
-                return Response(status=status.HTTP_404_NOT_FOUND)
         if not picking:
-            raise PermissionDenied('A picking parameter is required.')
-        return super().list(request, *args, **kwargs)
+            return self.custom_response_404(response)
+        
+        self.queryset = self.queryset.filter(picking=picking[0])
+        response = self.custom_response_200(response, response.data)
+        return response
     
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)

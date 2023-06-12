@@ -6,7 +6,7 @@ def add_consumption_detail_decorator(view_func):
         response = view_func(*args, **kwargs)
         current_datetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         response.data = {
-                "status": response.status,
+                "status_code": response.status_code,
                 "message": response.message,
                 "resolved_at": current_datetime,
                 "data": response.data
@@ -19,7 +19,7 @@ def add_saleorder_consumption_detail_decorator(view_func):
         response = view_func(*args, **kwargs)
         current_datetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         response.data = {
-                "status": response.status,
+                "status_code": response.status_code,
                 "message": response.message,
                 "resolved_at": current_datetime,
                 "next_url": response.next_url,
