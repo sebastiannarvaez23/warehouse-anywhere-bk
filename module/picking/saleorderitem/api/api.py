@@ -1,6 +1,8 @@
 import time
+
 # restframework
 from rest_framework import viewsets, status
+from rest_framework.response import Response
 
 # local apps
 from module.picking.saleorder.models import SaleOrder
@@ -21,11 +23,9 @@ class SaleOrderItemViewSet(APIMixin, viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
         saleorder_arg = kwargs.get('nosaleorder')
-        saleorder = SaleOrder.objects.filter(no_sale_order=saleorder_arg)
+        saleorder = SaleOrder.objects.filter(no_doc=saleorder_arg)
         if not saleorder:
-            return response(status=status.HTTP_404_NOT_FOUND)
+            return self.custom_response_404(response)
         self.queryset = self.queryset.filter(sale_order=saleorder[0])
-        response.next_url = self.get_next_url(
-            request, "sale_order", saleorder_arg, "saleorderitem"
-        )
+        response = self.custom_response_200(response, response.data[0])
         return response

@@ -9,7 +9,7 @@ from module.picking.saleorder.models import SaleOrder
 from module.picking.saleorder.api.serializers import SaleOrderSerializer
 from module.picking.saleorder.postgresql.conn import ConnSQLite3 as ConnDB
 from wmsbk.customs.mixins import APIMixin
-from wmsbk.decorators.response import add_consumption_detail_decorator
+from wmsbk.decorators.response import add_saleorder_consumption_detail_decorator
 
 
 class SaleOrderViewSet(APIMixin, viewsets.ModelViewSet):
@@ -19,27 +19,28 @@ class SaleOrderViewSet(APIMixin, viewsets.ModelViewSet):
     serializer_class = SaleOrderSerializer
     model = SaleOrder
 
-    @add_consumption_detail_decorator
+    @add_saleorder_consumption_detail_decorator
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
         saleorder = kwargs.get("nosaleorder")
-        self.queryset = self.queryset.filter(no_sale_order=saleorder)
+        self.queryset = self.queryset.filter(no_doc=saleorder)
         if not self.queryset:
-            return response(status=status.HTTP_404_NOT_FOUND)
-        response.data = response.data[0]
-        response.next_url = self.get_next_url(
-            request, "no_sale_order", saleorder, "saleorder"
-        )
+            response.next_url = None
+            response.before_url = None
+            return self.custom_response_404(response)
+        response.next_url = self.get_next_url(request, "no_doc", saleorder, "saleorder")
+        response.before_url = self.get_before_url(request, "no_doc", saleorder, "saleorder")
+        response = self.custom_response_200(response, response.data[0])
         return response
 
     def list_info_indicator(self, request, *args, **kwargs):
         schema_name = request.user.company.schema_name
         name_customer = kwargs.get("namecustomer")
-        no_sale_order = kwargs.get("nosaleorder")
+        no_doc = kwargs.get("nosaleorder")
         picking_quantity_by_customer = ConnDB().get_picking_quantity_by_customer(name_customer, schema_name)
         request_quantity_by_customer = ConnDB().get_request_quantity_by_customer(name_customer, schema_name)
-        picking_quantity_by_saleorder = ConnDB().get_picking_quantity_by_saleorder(no_sale_order, schema_name)
-        request_quantity_by_saleorder = ConnDB().get_request_quantity_by_saleorder(no_sale_order, schema_name)
+        picking_quantity_by_saleorder = ConnDB().get_picking_quantity_by_saleorder(no_doc, schema_name)
+        request_quantity_by_saleorder = ConnDB().get_request_quantity_by_saleorder(no_doc, schema_name)
         response = {
             "picking_quantity_by_customer": picking_quantity_by_customer["quantity"],
             "request_quantity_by_customer": request_quantity_by_customer["quantity"],

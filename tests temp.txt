@@ -1,11 +1,11 @@
     def test_list(self):
         saleorder = SaleOrderFactory().create_sale_order()
         response = self.client.get(
-            self.url + saleorder.no_sale_order + '/',
+            self.url + saleorder.no_doc + '/',
             format = 'json'
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data['no_sale_order'], saleorder.no_sale_order)
+        self.assertEqual(response.data['no_doc'], saleorder.no_doc)
         self.assertEqual(response.data['publication_date'], saleorder.publication_date.strftime('%Y-%m-%d'))
         self.assertEqual(response.data['delivery_date'], saleorder.delivery_date.strftime('%Y-%m-%d'))
         self.assertEqual(response.data['doc_date'], saleorder.doc_date.strftime('%Y-%m-%d'))

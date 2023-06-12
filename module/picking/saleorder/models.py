@@ -22,7 +22,7 @@ class PayTerm(models.Model):
 
 class SaleOrder(models.Model):
     id = models.AutoField(primary_key=True, verbose_name="Id")
-    no_sale_order = models.CharField(max_length=20, verbose_name="No Orden de venta")
+    no_doc = models.CharField(max_length=20, verbose_name="No Orden de venta")
     publication_date = models.DateField(verbose_name="Fecha publicación")
     delivery_date = models.DateField(verbose_name="Fecha de entrega")
     doc_date = models.DateField(verbose_name="Fecha de documento")

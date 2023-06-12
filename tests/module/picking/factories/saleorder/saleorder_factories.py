@@ -20,7 +20,7 @@ class SaleOrderFactory:
         pay_term_obj = self.create_pay_term()
         collection_obj = self.create_collection()
         return {
-            'no_sale_order': str(faker.random_number(digits=4)),
+            'no_doc': str(faker.random_number(digits=4)),
             'publication_date': faker.date_this_decade(),
             'delivery_date': faker.date_this_decade(),
             'doc_date': faker.date_this_decade(),

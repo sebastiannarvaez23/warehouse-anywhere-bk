@@ -49,7 +49,7 @@ def query_get_picking_quantity_by_saleorder(sale_order, schema):
             INNER JOIN {schema}.box_box T2 ON T1.id = T2.picking_id
             INNER JOIN {schema}.boxitem_boxitem T3 ON T2.id = T3.box_id
         WHERE
-            T0.no_sale_order = '{sale_order}'
+            T0.no_doc = '{sale_order}'
     """
     return sql
 
@@ -66,6 +66,6 @@ def query_get_request_quantity_by_saleorder(sale_order, schema):
             {schema}.saleorder_saleorder T0
             INNER JOIN {schema}.saleorderitem_saleorderitem T1 ON T0.id = T1.sale_order_id
         WHERE
-            T0.no_sale_order = '{sale_order}'
+            T0.no_doc = '{sale_order}'
     """
     return sql
