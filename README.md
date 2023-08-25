@@ -1,5 +1,5 @@
-# warehouse-anywhere-bk
-Application that manages and controls the dispatches of a company's finished product (WMS - Warehouse Management System), this project focuses more on interactivity on the Backend side.
+# Warehouse Anywhere
+Aplicación que gestiona y controla los despachos de producto terminado de una empresa (WMS - Warehouse Management System), este proyecto se centra más en la interactividad en el lado Backend.
 
 ## Instalación
 #### Entorno virtual y dependencias
