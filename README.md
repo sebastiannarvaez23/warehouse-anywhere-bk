@@ -26,5 +26,10 @@ De esta forma tendras las dependencias correctamente instaladas en el entorno qu
 <img src="https://github.com/sebastiannarvaez23/warehouse-anywhere-bk/assets/88569352/d7ab32ec-c4bc-4eb7-8e08-6ad6dfa3a3a2" width="auto" height="90">
 <img src="https://www.django-rest-framework.org/img/logo.png" width="180">
 <img src="https://user-images.githubusercontent.com/88569352/229976087-c6d3eba8-ef91-4ff4-8260-a8f38a88093e.png" width="auto" height="80">
-
 </p>
+
+## Swagger
+#### Rutas para la documentación
+Luego de levantar el servidor del proyecto puedes visitar:
+La [Documentación de Swagger con un entorno de consumo](http://localhost:8000/redoc/) o también la 
+[Documentación autogenerada de la configuración de cada servicio](http://localhost:8000/docs/).
