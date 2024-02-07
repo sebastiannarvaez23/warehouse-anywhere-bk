@@ -5,8 +5,8 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 
 # local apps
-from module.picking.saleorder.models import SaleOrder
-from module.picking.saleorder.api.serializers import SaleOrderSerializer
+from module.picking.saleorder.models import SaleOrder, Collection, PayTerm
+from module.picking.saleorder.api.serializers import SaleOrderSerializer, CollectionSerializer, PayTermSerializer
 from module.picking.saleorder.postgresql.conn import ConnSQLite3 as ConnDB
 from wmsbk.customs.mixins import APIMixin
 from wmsbk.decorators.response import (
@@ -54,3 +54,15 @@ class SaleOrderViewSet(APIMixin, viewsets.ModelViewSet):
         }
         response = self.custom_response_200(Response(data), data)
         return response
+
+class CollectionViewSet(APIMixin, viewsets.ModelViewSet):
+    """View Set class SaleOrderAPIView"""
+
+    queryset = Collection.objects.all()
+    serializer_class = CollectionSerializer
+    model = Collection
+
+class PayTermViewSet(APIMixin, viewsets.ModelViewSet):
+    queryset = PayTerm.objects.all()
+    serializer_class = PayTermSerializer
+    model = PayTerm

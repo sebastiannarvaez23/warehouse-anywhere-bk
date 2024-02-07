@@ -4,25 +4,31 @@ from module.storage.reference.models import Reference
 # Create your models here.
 class Collection(models.Model):
     id = models.AutoField(primary_key=True, verbose_name="Id")
-    name = models.CharField(max_length=255, verbose_name="Nombre")
+    name = models.CharField(max_length=255, unique=True, verbose_name="Nombre")
 
     class Meta:
         verbose_name = "Colección"
         verbose_name_plural = "Colecciones"
         ordering = ['-id']
+    
+    def __str__(self):
+        return self.name
 
 class PayTerm(models.Model):
     id = models.AutoField(primary_key=True, verbose_name="Id")
-    name = models.CharField(max_length=255, verbose_name="Nombre")
+    name = models.CharField(max_length=255, unique=True, verbose_name="Nombre")
 
     class Meta:
         verbose_name = "Termino de pago"
         verbose_name_plural = "Terminos de pago"
         ordering = ['-id']
+    
+    def __str__(self):
+        return self.name
 
 class SaleOrder(models.Model):
     id = models.AutoField(primary_key=True, verbose_name="Id")
-    no_doc = models.CharField(max_length=20, verbose_name="No Orden de venta")
+    no_doc = models.CharField(max_length=20, unique=True, verbose_name="No Orden de venta")
     publication_date = models.DateField(verbose_name="Fecha publicación")
     delivery_date = models.DateField(verbose_name="Fecha de entrega")
     doc_date = models.DateField(verbose_name="Fecha de documento")
